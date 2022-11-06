@@ -18,6 +18,7 @@ class MyDrawer extends StatelessWidget {
                   currentAccountPicture: CircleAvatar(
                     backgroundImage: NetworkImage(ImageURL),
                   ),
+                  currentAccountPictureSize: const Size.fromRadius(37.5),
                   accountName: Text(
                     "Shubh Gupta",
                     textScaleFactor: 1.1,
