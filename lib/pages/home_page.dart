@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() async {
-    // await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 5));
     final catalogjson =
         await rootBundle.loadString("assets/files/catalog.json");
     final decodedData = jsonDecode(catalogjson);
@@ -44,17 +44,41 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         color: Colors.white,
         child: (CatalogModel.items.isNotEmpty)
-            ? ListView.builder(
-                itemCount: CatalogModel.items.length,
+            ? GridView.builder(
+                padding: EdgeInsets.all(16.0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 6.0),
                 itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 12.0),
-                    child: ItemWidget(
-                      item: CatalogModel.items[index],
+                  Item item = CatalogModel.items[index];
+                  return Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: GridTile(
+                      header: Container(
+                        decoration:
+                            const BoxDecoration(color: Colors.deepPurple),
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          item.name,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      footer: Container(
+                          decoration:
+                              const BoxDecoration(color: Colors.deepPurple),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            item.price.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          )),
+                      child: Image.network(item.image),
                     ),
                   );
                 },
+                itemCount: CatalogModel.items.length,
               )
             : const Center(
                 child: CircularProgressIndicator(),
