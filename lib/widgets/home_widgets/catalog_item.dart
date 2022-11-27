@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/home_details_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/catalog.dart';
@@ -27,25 +28,41 @@ class CatalogItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            catalog.name.text.lg.bold.color(MyThemes.darkBluishColor).make(),
-            catalog.desc.text.textStyle(context.captionStyle).make(),
+            catalog.name.text.lg.bold
+                .color(context.theme.secondaryHeaderColor)
+                .make(),
+            catalog.desc.text
+                .color(context.theme.secondaryHeaderColor)
+                .textStyle(context.captionStyle)
+                .make(),
             ButtonBar(
               alignment: MainAxisAlignment.spaceBetween,
               buttonPadding: EdgeInsets.zero,
               children: [
-                "\$${catalog.price}".text.bold.lg.make(),
+                "\$${catalog.price}"
+                    .text
+                    .color(context.theme.secondaryHeaderColor)
+                    .bold
+                    .lg
+                    .make(),
                 ElevatedButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) =>
+                                  HomeDetailPage(catalog: catalog))));
+                    }),
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(MyThemes.darkBluishColor),
+                        backgroundColor: MaterialStateProperty.all(
+                            context.theme.primaryColor),
                         shape: MaterialStateProperty.all(StadiumBorder())),
-                    child: "Buy".text.make()),
+                    child: "View".text.make()),
               ],
             )
           ],
         ).box.p16.make())
       ],
-    )).white.roundedLg.square(150).make().py8();
+    )).color(context.theme.cardColor).roundedLg.square(150).make().py8();
   }
 }

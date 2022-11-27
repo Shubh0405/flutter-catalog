@@ -18,30 +18,38 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.theme.cardColor,
       appBar: AppBar(),
       bottomNavigationBar: Container(
-        color: MyThemes.creamColor,
+        color: context.theme.canvasColor,
         child: ButtonBar(
           alignment: MainAxisAlignment.spaceBetween,
           buttonPadding: EdgeInsets.zero,
           children: [
-            "\$${catalog.price}".text.bold.xl2.red800.make(),
+            "\$${catalog.price}"
+                .text
+                .bold
+                .xl2
+                .textStyle(context.theme.textTheme.bodyText1)
+                .make(),
             ElevatedButton(
                     onPressed: (() {}),
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(MyThemes.darkBluishColor),
+                        backgroundColor: MaterialStateProperty.all(
+                            context.theme.primaryColor),
                         shape: MaterialStateProperty.all(StadiumBorder())),
-                    child: "Buy".text.lg.make())
-                .wh(80, 40),
+                    child: "Add to cart".text.make())
+                .wh(120, 45),
           ],
         ).p32(),
       ),
       body: Column(children: [
         Hero(
                 tag: Key(catalog.id.toString()),
-                child: Center(child: Image.network(catalog.image)))
+                child: Center(
+                    child: Container(
+                        padding: EdgeInsets.zero,
+                        child: Image.network(catalog.image))))
             .h32(context)
             .p32(),
         Expanded(
@@ -50,13 +58,16 @@ class HomeDetailPage extends StatelessWidget {
                 edge: VxEdge.TOP,
                 arcType: VxArcType.CONVEY,
                 child: Container(
-                  color: MyThemes.creamColor,
+                  color: context.theme.canvasColor,
                   width: context.screenWidth,
                   child: Column(children: [
                     catalog.name.text.xl4.bold
-                        .color(MyThemes.darkBluishColor)
+                        .color(context.theme.secondaryHeaderColor)
                         .make(),
-                    catalog.desc.text.xl.textStyle(context.captionStyle).make(),
+                    catalog.desc.text.xl
+                        .textStyle(context.captionStyle)
+                        .color(context.theme.secondaryHeaderColor)
+                        .make(),
                   ]).py64(),
                 )))
       ]),
